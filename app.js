@@ -284,8 +284,13 @@ function renderMyReservationsScreen() {
 }
 
 document.getElementById('nav-my-reservations').addEventListener('click', renderMyReservationsScreen);
+
 document.getElementById('nav-admin').addEventListener('click', () => {
-    import('./admin.js').then(m => m.renderAdminLogin());
+    import('./admin.js');
+    const loginContainer = document.getElementById('admin-login-container');
+    const dashboardContainer = document.getElementById('admin-dashboard-container');
+    if (loginContainer) loginContainer.classList.remove('hidden');
+    if (dashboardContainer) dashboardContainer.classList.add('hidden');
 });
 
 renderFacilityList();
