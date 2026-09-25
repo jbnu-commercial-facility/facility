@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /facilities/{facilityId} {
+      allow read: if true;
+      allow write: if false; 
+    }
+    match /reservations/{reservationId} {
+      allow read: if true;
+      allow create: if request.resource.data.status == 'confirmed'
+                    && request.resource.data.department in ['회계', '무역', '경영', '경제']
+                    && request.resource.data.name is string
+                    && request.resource.data.studentId is string
+                    && request.resource.data.phone is string;
+      allow update: if request.resource.data.status == 'cancelled' 
+                    && resource.data.status == 'confirmed';
+    }
+  }
+}
